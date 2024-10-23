@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Web Crawler</title>
+  <title>Web Page Crawler and Comparator</title>
 </head>
 <body>
-  <input type="text" id="urlInput" placeholder="Enter URL">
-  <button onclick="fetchPage()">Fetch</button>
+  <input type="text" id="urlInput1" placeholder="Enter URL 1">
+  <input type="text" id="urlInput2" placeholder="Enter URL 2">
+  <button onclick="comparePages()">Compare</button>
   <div id="result"></div>
 
   <script>
-    function fetchPage() {
-      const url = document.getElementById('urlInput').value;
+    async function comparePages() {
+      const url1 = document.getElementById('urlInput1').value;
+      const url2 = document.getElementById('urlInput2').value;
 
-      fetch(url)
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('result').innerHTML = data;
-        })
-        .catch(error => {
-          console.error('Error:',   
- error);
-          document.getElementById('result').innerHTML = 'An error occurred.';
-        });
+      try {
+        const [response1, response2] = await Promise.all([
+          fetch(url1),
+          fetch(url2)
+        ]);
+
+        const [text1, text2] = await Promise.all([
+          response1.text(),
+          response2.text()
+        ]);
+
+        // Basic comparison: Check for exact match
+        const isExactMatch = text1 === text2;
+
+        // More advanced comparison: Compare specific elements (e.g., titles, headings)
+        // You can use a library like Cheerio for more precise parsing and comparison
+        // Here's a simplified example using plain JavaScript:
+        const parser = new DOMParser();
+        const doc1 = parser.parseFromString(text1, 'text/html');
+        const doc2 = parser.parseFromString(text2, 'text/html');
+
+        const title1 = doc1.querySelector('title').textContent;
+        const title2 = doc2.querySelector('title').textContent;
+
+        const isTitleMatch = title1 === title2;
+
+        // Display the comparison results
+        document.getElementById('result').innerHTML = `
+          <h2>Comparison Result:</h2>
+          <p>Exact Match: ${isExactMatch ? 'Yes' : 'No'}</p>
+          <p>Title Match: ${isTitleMatch ? 'Yes' : 'No'}</p>
+          `;
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('result').innerHTML = 'An error occurred.';
+      }
     }
   </script>
 </body>
