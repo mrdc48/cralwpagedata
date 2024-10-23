@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Web Crawler</title>
+</head>
+<body>
+  <input type="text" id="urlInput" placeholder="Enter URL">
+  <button onclick="fetchPage()">Fetch</button>
+  <div id="result"></div>
+
+  <script>
+    function fetchPage() {
+      const url = document.getElementById('urlInput').value;
+
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('result').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error:',   
+ error);
+          document.getElementById('result').innerHTML = 'An error occurred.';
+        });
+    }
+  </script>
+</body>
+</html>
