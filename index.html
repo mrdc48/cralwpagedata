@@ -25,27 +25,14 @@
           response2.text()
         ]);
 
-        // Basic comparison: Check for exact match
-        const isExactMatch = text1 === text2;
-
-        // More advanced comparison: Compare specific elements (e.g., titles, headings)
-        // You can use a library like Cheerio for more precise parsing and comparison
-        // Here's a simplified example using plain JavaScript:
-        const parser = new DOMParser();
-        const doc1 = parser.parseFromString(text1, 'text/html');
-        const doc2 = parser.parseFromString(text2, 'text/html');
-
-        const title1 = doc1.querySelector('title').textContent;
-        const title2 = doc2.querySelector('title').textContent;
-
-        const isTitleMatch = title1 === title2;
-
-        // Display the comparison results
+        // Display the content of both pages
         document.getElementById('result').innerHTML = `
-          <h2>Comparison Result:</h2>
-          <p>Exact Match: ${isExactMatch ? 'Yes' : 'No'}</p>
-          <p>Title Match: ${isTitleMatch ? 'Yes' : 'No'}</p>
-          `;
+          <h2>Page 1:</h2>
+          <div>${text1}</div>
+
+          <h2>Page 2:</h2>
+          <div>${text2}</div>
+        `;
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('result').innerHTML = 'An error occurred.';
