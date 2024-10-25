@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Trigger Button</title>
+  </head>
+  <body>
+    <div>
+      <h1>Editor Environment</h1>
+      <button id="publish-button">Publish</button>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const publishButton = document.getElementById("publish-button");
+
+        // Function to trigger the button click
+        function autoClickPublishButton() {
+          publishButton.click();
+          console.log("Publish button clicked");
+        }
+
+        // Automatically trigger the button click after 3 seconds
+        setTimeout(autoClickPublishButton, 3000);
+      });
+    </script>
+  </body>
+</html>
